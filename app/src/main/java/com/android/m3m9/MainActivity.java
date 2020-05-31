@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView elementsList;
     final SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
+    private List<ExampleElement> eeList = AccessData.getAccessData(ctx).getExampleElements();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ctx = this;
-        AccessData.getAccessData(ctx).loadExampleElements();
+        loadElements();
 
         attribute1 = findViewById(R.id.attribute1_input);
         attribute2 = findViewById(R.id.attribute2_input);
@@ -46,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
         editButton = findViewById(R.id.editLast_button);
         elementsList = findViewById(R.id.elements_tv);
 
-        AccessData.getAccessData(ctx).loadExampleElements();
-
-        List<ExampleElement> eeList = AccessData.getAccessData(ctx).getExampleElements();
         if (!eeList.isEmpty()) elementsList.setText(ExampleElementListToString(eeList));
 
         insertButton.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     int attributeInt = Integer.parseInt(attribute1.getText().toString());
                     String attributeDate = attribute2.getText().toString();
                     String attributeString = attribute3.getText().toString();
-                    AccessData.getAccessData(ctx).saveExampleElement(attributeInt, attributeDate, attributeString);
+                    saveElements(attributeInt, attributeDate, attributeString);
 
                     AccessData.getAccessData(ctx).loadExampleElements();
                     elementsList.setText(ExampleElementListToString(eeList));
@@ -81,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean isParseable = isNumeric(attribute1.getText().toString());
                 if (isParseable) {
                     int attributeInt = Integer.parseInt(attribute1.getText().toString());
-                    AccessData.getAccessData(ctx).deleteExampleElement(attributeInt);
+                    deleteElements(attributeInt);
 
                     AccessData.getAccessData(ctx).loadExampleElements();
                     elementsList.setText(ExampleElementListToString(eeList));
@@ -102,13 +100,9 @@ public class MainActivity extends AppCompatActivity {
                 if (isIntParseable && isDateParseable){
                     int attributeInt = Integer.parseInt(attribute1.getText().toString());
                     String attributeString = (attribute2.getText().toString());
-                    Date attributeDate;
-                    try {
-                        attributeDate = format.parse(attribute3.toString());
-                        AccessData.getAccessData(ctx).updateExampleElementByAttributeElement(attributeInt, attributeDate, attributeString);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    String attributeDate = attribute3.getText().toString();
+
+                    editElements(attributeInt, attributeDate, attributeString);
 
                     AccessData.getAccessData(ctx).loadExampleElements();
                     elementsList.setText(ExampleElementListToString(eeList));
@@ -149,5 +143,75 @@ public class MainActivity extends AppCompatActivity {
         } catch (ParseException e) {
             return false;
         }
+    }
+
+    private void loadElements(){
+        Thread sqlThread = new Thread() {
+            @Override
+            public void run() {
+                AccessData.getAccessData(ctx).loadExampleElements();
+                eeList = AccessData.getAccessData(ctx).getExampleElements();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        elementsList.setText(ExampleElementListToString(eeList));
+                    }
+                });
+            }
+        };
+        sqlThread.start();
+    }
+
+    private void saveElements(final int a1, final String a2, final String a3){
+        Thread sqlThread = new Thread() {
+            @Override
+            public void run() {
+                AccessData.getAccessData(ctx).saveExampleElement(a1, a2, a3);
+                AccessData.getAccessData(ctx).loadExampleElements();
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        eeList = AccessData.getAccessData(ctx).getExampleElements();
+                        elementsList.setText(ExampleElementListToString(eeList));
+                    }
+                });
+            }
+        };
+        sqlThread.start();
+    }
+
+    private void editElements(final int a1, final String a2, final String a3){
+        Thread sqlThread = new Thread() {
+            @Override
+            public void run() {
+                AccessData.getAccessData(ctx).updateExampleElementByAttributeElement(a1, a2, a3);
+                AccessData.getAccessData(ctx).loadExampleElements();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        eeList = AccessData.getAccessData(ctx).getExampleElements();
+                        elementsList.setText(ExampleElementListToString(eeList));
+                    }
+                });
+            }
+        };
+        sqlThread.start();
+    }
+
+    private void deleteElements(final int a1){
+        Thread sqlThread = new Thread() {
+            @Override
+            public void run() {
+                AccessData.getAccessData(ctx).deleteExampleElement(a1);
+                AccessData.getAccessData(ctx).loadExampleElements();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        eeList = AccessData.getAccessData(ctx).getExampleElements();
+                        elementsList.setText(ExampleElementListToString(eeList));
+                    }
+                });
+            }
+        };
+        sqlThread.start();
     }
 }

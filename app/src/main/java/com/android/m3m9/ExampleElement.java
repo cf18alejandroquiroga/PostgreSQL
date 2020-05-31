@@ -1,11 +1,8 @@
 package com.android.m3m9;
 
-//import androidx.annotation.NonNull;
-
 import java.util.Date;
 public class ExampleElement {
 
-//    @NonNull
     private int attributeInt;
     private Date attributeDate;
     private String attributeString;
