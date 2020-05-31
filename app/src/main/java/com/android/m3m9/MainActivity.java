@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 import java.text.ParseException;
@@ -63,13 +64,15 @@ public class MainActivity extends AppCompatActivity {
 
                     AccessData.getAccessData(ctx).loadExampleElements();
                     elementsList.setText(ExampleElementListToString(eeList));
+                    attribute1.setText("");
+                    attribute2.setText("");
+                    attribute3.setText("");
                 }
                 else{
-                    if (!isIntParseable) System.out.println("Attribute 1 Incorrect format, must be an Integer");
-                    if (!isDateParseable) System.out.println("Attribute 2 Incorrect format, must be a Date \"mm-dd-yyyy\"");
+                    if (!isIntParseable) Toast.makeText(ctx, "Attribute 1 Incorrect format, must be an Integer", Toast.LENGTH_SHORT).show();
+                    if (!isIntParseable) Toast.makeText(ctx, "Attribute 2 Incorrect format, must be a Date \"mm-dd-yyyy\"", Toast.LENGTH_SHORT).show();
                 }
             }
-
 
         });
 
@@ -83,9 +86,13 @@ public class MainActivity extends AppCompatActivity {
 
                     AccessData.getAccessData(ctx).loadExampleElements();
                     elementsList.setText(ExampleElementListToString(eeList));
+
+                    attribute1.setText("");
+                    attribute2.setText("");
+                    attribute3.setText("");
                 }
                 else{
-                    System.out.println("Attribute 1 Incorrect format, must be an Integer");
+                    if (!isParseable) Toast.makeText(ctx, "Attribute 1 Incorrect format, must be an Integer", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -106,10 +113,14 @@ public class MainActivity extends AppCompatActivity {
 
                     AccessData.getAccessData(ctx).loadExampleElements();
                     elementsList.setText(ExampleElementListToString(eeList));
+
+                    attribute1.setText("");
+                    attribute2.setText("");
+                    attribute3.setText("");
                 }
                 else{
-                    if (!isIntParseable) System.out.println("Attribute 1 Incorrect format, must be an Integer");
-                    if (!isDateParseable) System.out.println("Attribute 2 Incorrect format, must be a Date \"mm-dd-yyyy\"");
+                    if (!isIntParseable) Toast.makeText(ctx, "Attribute 1 Incorrect format, must be an Integer", Toast.LENGTH_SHORT).show();
+                    if (!isIntParseable) Toast.makeText(ctx, "Attribute 2 Incorrect format, must be a Date \"mm-dd-yyyy\"", Toast.LENGTH_SHORT).show();
                 }
             }
         });
