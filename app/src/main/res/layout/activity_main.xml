@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/attribute1_input"
+        android:layout_width="320dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="56dp"
+        android:ems="10"
+        android:hint="Atributo 1 int (ID manual)"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/attribute2_input"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/attribute2_input"
+        android:layout_width="320dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="56dp"
+        android:ems="10"
+        android:hint='Atributo 2 Date "mm-dd-yyyy"'
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/attribute3_input"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/attribute3_input"
+        android:layout_width="320dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginBottom="24dp"
+        android:ems="10"
+        android:hint="Atributo 3 String"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editLast_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/insert_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="Insert"
+        app:layout_constraintBottom_toTopOf="@+id/elements_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attribute3_input" />
+
+    <TextView
+        android:id="@+id/elements_tv"
+        android:layout_width="327dp"
+        android:layout_height="393dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/delete_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="168dp"
+        android:text="Delete by id"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/editLast_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="28dp"
+        android:text="Edit by id"
+        app:layout_constraintBottom_toTopOf="@+id/elements_tv"
+        app:layout_constraintStart_toEndOf="@+id/insert_button" />
+</androidx.constraintlayout.widget.ConstraintLayout>
